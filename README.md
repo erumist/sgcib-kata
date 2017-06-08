@@ -1,3 +1,7 @@
+## Before
+
+I remade my commit when I were done because I didn't like how I made it
+
 ## Spec
 
 Bank account kata
