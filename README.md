@@ -40,10 +40,9 @@ npm start
 
 ## WebService endpoint
 
-@POST {transaction: {idUser: '@id', amount: '@number', type: 'TRANSACTION_TYPE'}}
-/users/transaction
-@return full user object
+POST (/users/transaction)
+{transaction: {idUser: 'id', amount: 'number', type: 'TRANSACTION_TYPE'}}
+return full user object
 
-@GET @id
-/users/history
-@return full user object
+GET (/users/history) id
+return full user object
