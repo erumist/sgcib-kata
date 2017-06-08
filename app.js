@@ -8,6 +8,10 @@ var bodyParser = require('body-parser');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 
+var mongoose = require('mongoose');
+mongoose.Promise = global.Promise;
+
+var cors = require('cors');
 var app = express();
 
 // view engine setup
@@ -17,6 +21,7 @@ app.set('view engine', 'jade');
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
+app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -33,7 +38,8 @@ app.use(function(req, res, next) {
 });
 
 // error handlers
-
+console.log(app.get('env'));
+var Config = require('./config/'+ app.get('env'));
 // development error handler
 // will print stacktrace
 if (app.get('env') === 'development') {
@@ -46,6 +52,7 @@ if (app.get('env') === 'development') {
   });
 }
 
+
 // production error handler
 // no stacktraces leaked to user
 app.use(function(err, req, res, next) {
@@ -54,6 +61,12 @@ app.use(function(err, req, res, next) {
     message: err.message,
     error: {}
   });
+});
+
+mongoose.connect("mongodb://"+ Config.mongodb.url +":"+ Config.mongodb.port +"/"+ Config.mongodb.base, function(err) {
+    if (err) {
+        console.log("FATAL ERROR : MONGODB INIT FAILED!!! ", err);
+    }
 });
 
 
